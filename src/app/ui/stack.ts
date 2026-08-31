@@ -4,14 +4,20 @@ import { I18n, type Dictionary } from '../core/i18n';
 import { STACK_GROUPS } from '../core/profile';
 import { Reveal } from '../core/reveal';
 import { SectionHead } from './section-head';
+import { TechIcon } from './tech-icons';
 
 @Component({
   selector: 'dt-stack',
-  imports: [SectionHead, Reveal],
+  imports: [SectionHead, Reveal, TechIcon],
   template: `
     <section class="stack" id="stack">
       <div class="shell">
-        <dt-section-head index="03" [label]="t().stackIndex" [title]="t().stackTitle" [lead]="t().stackLead" />
+        <dt-section-head
+          index="03"
+          [label]="t().stackIndex"
+          [title]="t().stackTitle"
+          [lead]="t().stackLead"
+        />
 
         <div class="groups">
           @for (group of groups; track group.key; let i = $index) {
@@ -19,7 +25,10 @@ import { SectionHead } from './section-head';
               <h3 class="eyebrow">{{ label(group.key) }}</h3>
               <ul class="items">
                 @for (item of group.items; track item) {
-                  <li class="item">{{ item }}</li>
+                  <li class="item">
+                    <dt-tech-icon class="mark" [name]="item" />
+                    <span>{{ item }}</span>
+                  </li>
                 }
               </ul>
             </section>
@@ -51,27 +60,28 @@ import { SectionHead } from './section-head';
     .items {
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      gap: 0.55rem;
     }
 
     .item {
-      position: relative;
-      padding-left: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
       font-size: 0.8125rem;
       color: var(--ink-2);
-      transition: color 0.25s var(--ease), transform 0.25s var(--ease-out);
+      transition:
+        color 0.25s var(--ease),
+        transform 0.25s var(--ease-out);
     }
 
-    /* A tick in the margin, letterpress-style, that inks in on hover. */
-    .item::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0.7em;
-      width: 5px;
-      height: 1px;
-      background: var(--ink-3);
-      transition: width 0.25s var(--ease-out), background-color 0.25s var(--ease);
+    /* The mark sits a shade back from the label so the type still leads, then
+       inks in with the accent on hover — the same gesture the old tick made. */
+    .mark {
+      flex: none;
+      color: var(--ink-3);
+      transition:
+        color 0.25s var(--ease),
+        transform 0.25s var(--ease-out);
     }
 
     .item:hover {
@@ -79,9 +89,24 @@ import { SectionHead } from './section-head';
       transform: translateX(2px);
     }
 
-    .item:hover::before {
-      width: 9px;
-      background: var(--accent);
+    .item:hover .mark {
+      color: var(--accent);
+      transform: scale(1.08);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .item,
+      .mark {
+        transition: color 0.25s var(--ease);
+      }
+
+      .item:hover {
+        transform: none;
+      }
+
+      .item:hover .mark {
+        transform: none;
+      }
     }
   `,
 })
