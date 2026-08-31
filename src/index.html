@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <title>Diego Tapia — Fullstack Developer</title>
+  <base href="/" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description"
+    content="Diego Tapia — fullstack developer based in Buenos Aires. Angular, NestJS, Node.js and AWS. Open-source work pulled live from GitHub." />
+  <meta name="author" content="Diego Tapia" />
+  <meta name="theme-color" content="#f2efe6" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#121110" media="(prefers-color-scheme: dark)" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Diego Tapia — Fullstack Developer" />
+  <meta property="og:description"
+    content="Fullstack developer in Buenos Aires. Angular, NestJS, Node.js, AWS." />
+  <meta property="og:url" content="https://dtapia-dev.vercel.app/" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="canonical" href="https://dtapia-dev.vercel.app/" />
+
+  <!-- Fonts are self-hosted (see src/styles.css), so the only third-party
+       origin left on the critical path is the GitHub API. -->
+  <link rel="preconnect" href="https://api.github.com" crossorigin />
+  <link rel="preload" href="fonts/syne-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="fonts/fira-code-latin.woff2" as="font" type="font/woff2" crossorigin />
+
+  <script>
+    // Resolve the theme before first paint so the paper never flashes.
+    (function () {
+      try {
+        var stored = localStorage.getItem('dt.theme');
+        var theme = stored === 'light' || stored === 'dark'
+          ? stored
+          : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.dataset.theme = theme;
+      } catch (e) { /* storage blocked — keep the light default */ }
+      // Only an explicit, stored choice changes the language. Sniffing
+      // navigator.language would contradict the prerendered HTML, which is
+      // English: the page would paint in English and then visibly rewrite
+      // itself on hydration. The header toggle sets this, and it sticks.
+      try {
+        var lang = localStorage.getItem('dt.lang');
+        if (lang === 'es' || lang === 'en') document.documentElement.lang = lang;
+      } catch (e) { /* noop */ }
+    })();
+  </script>
+</head>
+
+<body>
+  <app-root></app-root>
+</body>
+</html>

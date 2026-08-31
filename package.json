@@ -1,0 +1,41 @@
+{
+  "name": "dtapia-portfolio",
+  "version": "1.0.0",
+  "description": "Diego Tapia \u2014 personal portfolio. Angular 22, zoneless, public repositories read live from the GitHub API.",
+  "private": true,
+  "packageManager": "npm@11.19.0",
+  "engines": {
+    "node": "^22.22.3 || ^24.15.0 || >=26.0.0"
+  },
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve --host 0.0.0.0 --port 4200 --poll 1000",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test",
+    "docker:dev": "docker compose up dev",
+    "docker:build": "docker compose build web",
+    "docker:prod": "docker compose up web"
+  },
+  "dependencies": {
+    "@angular/common": "^22.1.0",
+    "@angular/compiler": "^22.1.0",
+    "@angular/core": "^22.1.0",
+    "@angular/forms": "^22.1.0",
+    "@angular/platform-browser": "^22.1.0",
+    "@angular/platform-server": "^22.1.0",
+    "@angular/ssr": "^22.1.6",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@angular/build": "^22.1.6",
+    "@angular/cli": "^22.1.6",
+    "@angular/compiler-cli": "^22.1.0",
+    "@types/node": "^20.17.19",
+    "jsdom": "^28.0.0",
+    "prettier": "^3.8.1",
+    "typescript": "~6.0.2",
+    "vitest": "^4.0.8"
+  }
+}

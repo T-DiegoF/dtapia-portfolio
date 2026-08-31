@@ -1,0 +1,18 @@
+# ---------------------------------------------------------------
+# Development image: `ng serve` with hot reload.
+# Source is bind-mounted by docker-compose; node_modules stays
+# in an anonymous volume so the container's install is not
+# shadowed by the host directory.
+# ---------------------------------------------------------------
+FROM node:24.20.0-alpine
+WORKDIR /app
+
+RUN apk add --no-cache git
+
+COPY package.json package-lock.json* ./
+RUN if [ -f package-lock.json ]; then npm ci; else npm install; fi
+
+COPY . .
+
+EXPOSE 4200
+CMD ["npm", "start"]

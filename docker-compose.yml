@@ -1,0 +1,40 @@
+name: dtapia-portfolio
+
+services:
+  # Development: ng serve with hot reload on http://localhost:4200
+  #   docker compose up dev
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "4200:4200"
+    volumes:
+      # Source is bind-mounted so edits on the host reload in the container.
+      - .:/app
+      # ...but node_modules and the Angular cache stay container-side, so the
+      # host (a different OS and CPU) never shadows the install.
+      - portfolio_node_modules:/app/node_modules
+      - portfolio_angular_cache:/app/.angular
+    environment:
+      # Polling is what makes file watching work across the Windows/Linux
+      # bind-mount boundary, where inotify events do not propagate.
+      NG_CLI_ANALYTICS: "false"
+      CHOKIDAR_USEPOLLING: "true"
+    stdin_open: true
+    tty: true
+
+  # Production: the built site behind nginx on http://localhost:8080
+  #   docker compose up web
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+
+volumes:
+  portfolio_node_modules:
+  portfolio_angular_cache:
